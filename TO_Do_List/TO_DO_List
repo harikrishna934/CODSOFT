@@ -1,0 +1,96 @@
+# Simple To-Do List Application
+
+tasks = []  # List to store tasks
+
+
+def add_task():
+    """Add a new task."""
+    task = input("Enter a new task: ")
+    tasks.append({"task": task, "status": "Pending"})
+    print("1 Task added successfully!")
+
+
+def view_tasks():
+    """View all tasks."""
+    if not tasks:
+        print("\nNo tasks found.")
+        return
+    print("\n To-Do List:")
+    for i, t in enumerate(tasks, start=1):
+        status = " Done" if t["status"] == "Done" else "⌛ Pending"
+        print(f"{i}. {t['task']} [{status}]")
+
+
+def mark_task_done():
+    """Mark a task as done."""
+    view_tasks()
+    if tasks:
+        try:
+            task_num = int(input("Enter the task number to mark as done: "))
+            if 1 <= task_num <= len(tasks):
+                tasks[task_num - 1]["status"] = "Done"
+                print(" Task marked as done!")
+            else:
+                print(" Invalid task number.")
+        except ValueError:
+            print(" Please enter a valid number.")
+
+
+def update_task():
+    """Update task text."""
+    view_tasks()
+    if tasks:
+        try:
+            task_num = int(input("Enter the task number to update: "))
+            if 1 <= task_num <= len(tasks):
+                new_task = input("Enter the new task text: ")
+                tasks[task_num - 1]["task"] = new_task
+                print(" Task updated successfully!")
+            else:
+                print(" Invalid task number.")
+        except ValueError:
+            print(" Please enter a valid number.")
+
+
+def delete_task():
+    """Delete a task."""
+    view_tasks()
+    if tasks:
+        try:
+            task_num = int(input("Enter the task number to delete: "))
+            if 1 <= task_num <= len(tasks):
+                tasks.pop(task_num - 1)
+                print("🗑 Task deleted successfully!")
+            else:
+                print(" Invalid task number.")
+        except ValueError:
+            print(" Please enter a valid number.")
+
+
+# Main Menu
+while True:
+    print("\n To-Do List Menu")
+    print("1. Add Task")
+    print("2. View Tasks")
+    print("3. Mark Task as Done")
+    print("4. Update Task")
+    print("5. Delete Task")
+    print("6. Exit")
+
+    choice = input("Enter your choice (1-6): ")
+
+    if choice == '1':
+        add_task()
+    elif choice == '2':
+        view_tasks()
+    elif choice == '3':
+        mark_task_done()
+    elif choice == '4':
+        update_task()
+    elif choice == '5':
+        delete_task()
+    elif choice == '6':
+        print(" Exiting To-Do List. Goodbye!")
+        break
+    else:
+        print(" Invalid choice. Please try again.")
